@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лист заказов</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand">ЛИСТ ЗАКАЗОВ</div>
+    <div class="subtitle">Очередь на просмотр</div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="stats">
+    <div class="stat"><span>Заказов</span><strong id="count">0</strong></div>
+    <div class="stat"><span>Общий приоритет</span><strong id="priority">0</strong></div>
+    <div class="stat"><span>Последнее обновление</span><strong id="updated">—</strong></div>
+  </section>
+
+  <section class="toolbar">
+    <div class="search-wrap">
+      <span>⌕</span>
+      <input id="search" type="search" placeholder="Поиск по названию или заказчику…">
+    </div>
+    <select id="typeFilter"><option value="">Все типы</option></select>
+    <select id="directionFilter"><option value="">Все направления</option></select>
+    <select id="sort">
+      <option value="priority">По приоритету</option>
+      <option value="time">По времени</option>
+      <option value="name">По названию</option>
+      <option value="total">По итогу</option>
+    </select>
+  </section>
+
+  <section class="table-card">
+    <div class="table-head">
+      <div>№</div><div>Заказ</div><div>Время</div><div>Приоритет</div>
+      <div>₽</div><div>Выкуп</div><div>-20%</div><div>Итог</div><div>Тип</div><div>Направление</div>
+    </div>
+    <div id="orders"></div>
+  </section>
+  <p class="note">* — отметка из исходного списка. Страница доступна только для просмотра.</p>
+</main>
+<script src="script.js"></script>
+</body>
+</html>

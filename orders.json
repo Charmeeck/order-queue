@@ -1,0 +1,167 @@
+[
+  {
+    "name": "Пак Дорам Нины (Нина)",
+    "time": 473,
+    "priority": 3500,
+    "price": 4730,
+    "buyout": 5160,
+    "discount": 0,
+    "total": 5160,
+    "type": "Сериал",
+    "direction": "Восток"
+  },
+  {
+    "name": "Царство (Арто)",
+    "time": 1196,
+    "priority": 3400,
+    "price": 11960,
+    "buyout": 4120,
+    "discount": 0,
+    "total": 4120,
+    "type": "Анимация",
+    "direction": "Аниме"
+  },
+  {
+    "name": "Легенда о Шэнь Ли (Нина)",
+    "time": 1290,
+    "priority": 3100,
+    "price": 12900,
+    "buyout": 16770,
+    "discount": 0,
+    "total": 16770,
+    "type": "Сериал",
+    "direction": "Восток"
+  },
+  {
+    "name": "Мажорки (Валентинка)",
+    "time": 440,
+    "priority": 1102,
+    "price": 4400,
+    "buyout": 4400,
+    "discount": 0,
+    "total": 4400,
+    "type": "Сериал",
+    "direction": "Юг"
+  },
+  {
+    "name": "Красотка (Изида)",
+    "time": 483,
+    "priority": 1001,
+    "price": 4830,
+    "buyout": 5750,
+    "discount": 0,
+    "total": 5750,
+    "type": "Фильм",
+    "direction": ""
+  },
+  {
+    "name": "Богиня: «Кем хочешь переродиться в другом мире?» — Я: «Героем!» (Абы)",
+    "time": 276,
+    "priority": 1000,
+    "price": 2760,
+    "buyout": 2760,
+    "discount": 0,
+    "total": 2760,
+    "type": "Анимация",
+    "direction": "Аниме"
+  },
+  {
+    "name": "Профессионал-одиночка (Валентинка)",
+    "time": 880,
+    "priority": 1000,
+    "price": 8800,
+    "buyout": 4400,
+    "discount": 0,
+    "total": 4400,
+    "type": "Сериал",
+    "direction": "Дорама"
+  },
+  {
+    "name": "Ты и я — полные противоположности (Изида)*",
+    "time": 460,
+    "priority": 800,
+    "price": 4600,
+    "buyout": 5520,
+    "discount": 0,
+    "total": 5520,
+    "type": "Анимация",
+    "direction": "Аниме"
+  },
+  {
+    "name": "Негодяй Болливуда (Покорение Болливуда) (Валентинка)",
+    "time": 308,
+    "priority": 750,
+    "price": 3080,
+    "buyout": 3080,
+    "discount": 0,
+    "total": 3080,
+    "type": "Сериал",
+    "direction": "Юг"
+  },
+  {
+    "name": "Господин и пёс (Валентинка)",
+    "time": 36,
+    "priority": 750,
+    "price": 360,
+    "buyout": 360,
+    "discount": 0,
+    "total": 360,
+    "type": "Анимация",
+    "direction": "Аниме"
+  },
+  {
+    "name": "Романтический убийца (Изида)",
+    "time": 321,
+    "priority": 750,
+    "price": 3210,
+    "buyout": 3210,
+    "discount": 0,
+    "total": 3210,
+    "type": "Анимация",
+    "direction": "Аниме"
+  },
+  {
+    "name": "Вавилон 5 (Артем С. + Керо)",
+    "time": 946,
+    "priority": 700,
+    "price": 9460,
+    "buyout": 9460,
+    "discount": 0,
+    "total": 9460,
+    "type": "Сериал",
+    "direction": "Запад"
+  },
+  {
+    "name": "Мобильный воин Гандам: Железнокровные сироты 2 сезон (Изида)*",
+    "time": 1150,
+    "priority": 650,
+    "price": 11500,
+    "buyout": 11500,
+    "discount": 0,
+    "total": 11500,
+    "type": "Анимация",
+    "direction": "Аниме"
+  },
+  {
+    "name": "Nodame Cantabile (Керо)",
+    "time": 828,
+    "priority": 600,
+    "price": 10350,
+    "buyout": 10350,
+    "discount": 0,
+    "total": 10350,
+    "type": "Анимация",
+    "direction": "Аниме"
+  },
+  {
+    "name": "Судьба/Странная подделка (Изида)",
+    "time": 355,
+    "priority": 500,
+    "price": 3550,
+    "buyout": 3550,
+    "discount": 710,
+    "total": 2840,
+    "type": "Анимация",
+    "direction": "Аниме"
+  }
+]
