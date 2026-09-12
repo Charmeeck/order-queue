@@ -1,50 +1,26 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Лист заказов</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лист заказов</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="hero">
-  <div class="hero-inner">
-    <div class="brand">ЛИСТ ЗАКАЗОВ</div>
-    <div class="subtitle">Очередь на просмотр</div>
-  </div>
-</header>
-
+<header class="hero"><div class="hero-inner"><div class="brand">ЛИСТ ЗАКАЗОВ</div><div class="subtitle">Очередь на просмотр</div></div></header>
 <main class="container">
-  <section class="stats">
-    <div class="stat"><span>Заказов</span><strong id="count">0</strong></div>
-    <div class="stat"><span>Общий приоритет</span><strong id="priority">0</strong></div>
-    <div class="stat"><span>Последнее обновление</span><strong id="updated">—</strong></div>
+  <nav class="tabs"><button class="tab active" data-tab="queue">Очередь</button><button class="tab" data-tab="admin">Админка</button></nav>
+  <section id="queueTab">
+    <section class="stats"><div class="stat"><span>Заказов</span><strong id="count">0</strong></div><div class="stat"><span>Общий приоритет</span><strong id="priority">0</strong></div><div class="stat"><span>Последнее обновление</span><strong id="updated">—</strong></div></section>
+    <section class="toolbar"><div class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="Поиск по названию или заказчику…"></div><select id="typeFilter"><option value="">Все типы</option></select><select id="directionFilter"><option value="">Все направления</option></select><select id="sort"><option value="priority">По приоритету</option><option value="time">По времени</option><option value="name">По названию</option><option value="total">По итогу</option></select></section>
+    <section class="table-card"><div class="table-head"><div>№</div><div>Заказ</div><div>Время</div><div>Приоритет</div><div>₽</div><div>Выкуп</div><div>-20%</div><div>Итог</div><div>Тип</div><div>Направление</div></div><div id="orders"></div></section>
+    <p class="note">* — отметка из исходного списка.</p>
   </section>
-
-  <section class="toolbar">
-    <div class="search-wrap">
-      <span>⌕</span>
-      <input id="search" type="search" placeholder="Поиск по названию или заказчику…">
+  <section id="adminTab" class="admin hidden">
+    <div id="loginBox" class="admin-card"><h2>Админка</h2><p class="muted">Введите пароль администратора.</p><form id="loginForm"><input id="password" type="password" placeholder="Пароль"><button class="primary" type="submit">Войти</button><div id="loginError" class="error"></div></form><p class="security-note">Важно: GitHub Pages — статический хостинг. Этот режим защищает интерфейс паролем только на уровне браузера. Для настоящей закрытой админки нужен сервер/база данных.</p></div>
+    <div id="panel" class="hidden">
+      <div class="admin-top"><div><h2>Управление заказами</h2><p class="muted">Изменения сохраняются в этом браузере. Кнопка «Скачать JSON» подготовит файл для публикации на GitHub Pages.</p></div><div class="admin-actions"><button id="download" class="primary">Скачать JSON</button><button id="logout">Выйти</button></div></div>
+      <form id="orderForm" class="editor"><input type="hidden" id="editIndex" value="-1"><input id="fName" placeholder="Название заказа" required><input id="fTime" type="number" min="0" placeholder="Время" required><input id="fPriority" type="number" min="0" placeholder="Приоритет" required><input id="fPrice" type="number" min="0" placeholder="₽" required><input id="fBuyout" type="number" min="0" placeholder="Выкуп" required><input id="fDiscount" type="number" min="0" placeholder="Скидка" required><input id="fTotal" type="number" min="0" placeholder="Итог" required><input id="fType" placeholder="Тип"><input id="fDirection" placeholder="Направление"><div class="editor-buttons"><button class="primary" type="submit">Сохранить заказ</button><button type="button" id="cancelEdit">Очистить</button></div></form>
+      <section class="admin-list"><div class="admin-list-head"><span>Заказ</span><span>Приоритет</span><span>Тип</span><span>Действия</span></div><div id="adminOrders"></div></section>
     </div>
-    <select id="typeFilter"><option value="">Все типы</option></select>
-    <select id="directionFilter"><option value="">Все направления</option></select>
-    <select id="sort">
-      <option value="priority">По приоритету</option>
-      <option value="time">По времени</option>
-      <option value="name">По названию</option>
-      <option value="total">По итогу</option>
-    </select>
   </section>
-
-  <section class="table-card">
-    <div class="table-head">
-      <div>№</div><div>Заказ</div><div>Время</div><div>Приоритет</div>
-      <div>₽</div><div>Выкуп</div><div>-20%</div><div>Итог</div><div>Тип</div><div>Направление</div>
-    </div>
-    <div id="orders"></div>
-  </section>
-  <p class="note">* — отметка из исходного списка. Страница доступна только для просмотра.</p>
-</main>
-<script src="script.js"></script>
-</body>
-</html>
+</main><script src="script.js"></script>
+</body></html>

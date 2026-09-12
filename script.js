@@ -1,30 +1,18 @@
-const $=s=>document.querySelector(s);
-let orders=[];
-const fmt=n=>new Intl.NumberFormat('ru-RU').format(n);
-async function load(){
-  orders=await fetch('orders.json').then(r=>r.json());
-  const types=[...new Set(orders.map(x=>x.type).filter(Boolean))].sort();
-  const dirs=[...new Set(orders.map(x=>x.direction).filter(Boolean))].sort();
-  types.forEach(x=>$('#typeFilter').insertAdjacentHTML('beforeend',`<option>${x}</option>`));
-  dirs.forEach(x=>$('#directionFilter').insertAdjacentHTML('beforeend',`<option>${x}</option>`));
-  $('#updated').textContent=new Date().toLocaleDateString('ru-RU');
-  render();
-}
-function render(){
-  const q=$('#search').value.toLowerCase().trim(), type=$('#typeFilter').value, dir=$('#directionFilter').value, sort=$('#sort').value;
-  let a=orders.filter(x=>(!q||x.name.toLowerCase().includes(q))&&(!type||x.type===type)&&(!dir||x.direction===dir));
-  a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'ru'):sort==='time'?x.time-y.time:sort==='total'?y.total-x.total:y.priority-x.priority);
-  $('#count').textContent=a.length;
-  $('#priority').textContent=fmt(a.reduce((s,x)=>s+x.priority,0));
-  $('#orders').innerHTML=a.length?a.map((x,i)=>`<div class="row">
-    <div class="num">${i+1}</div><div class="name">${esc(x.name)}</div>
-    <div class="number time">${fmt(x.time)}</div><div class="number priority">${fmt(x.priority)}</div>
-    <div class="number price">${fmt(x.price)}</div><div class="number buyout">${fmt(x.buyout)}</div>
-    <div class="number discount">${fmt(x.discount)}</div><div class="number total">${fmt(x.total)}</div>
-    <div class="type"><span class="badge">${esc(x.type||'—')}</span></div>
-    <div class="direction"><span class="badge">${esc(x.direction||'—')}</span></div>
-  </div>`).join(''):`<div class="empty">Ничего не найдено</div>`;
-}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
-['search','typeFilter','directionFilter','sort'].forEach(id=>$('#'+id).addEventListener(id==='search'?'input':'change',render));
-load().catch(()=>$('#orders').innerHTML='<div class="empty">Не удалось загрузить orders.json</div>');
+const $=s=>document.querySelector(s); let orders=[]; const PASS='1234'; const STORAGE='orderQueueDataV1';
+const fmt=n=>new Intl.NumberFormat('ru-RU').format(Number(n)||0);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+async function load(){try{const saved=localStorage.getItem(STORAGE);orders=saved?JSON.parse(saved):await fetch('orders.json').then(r=>r.json())}catch(e){orders=[]} refreshFilters(); render(); renderAdmin(); $('#updated').textContent=new Date().toLocaleDateString('ru-RU')}
+function refreshFilters(){const t=$('#typeFilter'),d=$('#directionFilter'),tv=t.value,dv=d.value;t.innerHTML='<option value="">Все типы</option>';d.innerHTML='<option value="">Все направления</option>';[...new Set(orders.map(x=>x.type).filter(Boolean))].sort().forEach(x=>t.insertAdjacentHTML('beforeend',`<option value="${esc(x)}">${esc(x)}</option>`));[...new Set(orders.map(x=>x.direction).filter(Boolean))].sort().forEach(x=>d.insertAdjacentHTML('beforeend',`<option value="${esc(x)}">${esc(x)}</option>`));t.value=tv;d.value=dv}
+function render(){const q=$('#search').value.toLowerCase().trim(),type=$('#typeFilter').value,dir=$('#directionFilter').value,sort=$('#sort').value;let a=orders.filter(x=>(!q||String(x.name).toLowerCase().includes(q))&&(!type||x.type===type)&&(!dir||x.direction===dir));a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'ru'):sort==='time'?x.time-y.time:sort==='total'?y.total-x.total:y.priority-x.priority);$('#count').textContent=a.length;$('#priority').textContent=fmt(a.reduce((s,x)=>s+Number(x.priority||0),0));$('#orders').innerHTML=a.length?a.map((x,i)=>`<div class="row"><div class="num">${i+1}</div><div class="name">${esc(x.name)}</div><div class="number time">${fmt(x.time)}</div><div class="number priority">${fmt(x.priority)}</div><div class="number price">${fmt(x.price)}</div><div class="number buyout">${fmt(x.buyout)}</div><div class="number discount">${fmt(x.discount)}</div><div class="number total">${fmt(x.total)}</div><div class="type"><span class="badge">${esc(x.type||'—')}</span></div><div class="direction"><span class="badge">${esc(x.direction||'—')}</span></div></div>`).join(''):'<div class="empty">Ничего не найдено</div>'}
+function renderAdmin(){$('#adminOrders').innerHTML=orders.map((x,i)=>`<div class="admin-row"><div><strong>${esc(x.name)}</strong></div><div>${fmt(x.priority)}</div><div>${esc(x.type||'—')}</div><div class="actions"><button onclick="editOrder(${i})">Изменить</button><button class="del" onclick="deleteOrder(${i})">Удалить</button></div></div>`).join('')||'<div class="empty">Заказов пока нет</div>'}
+function save(){localStorage.setItem(STORAGE,JSON.stringify(orders));refreshFilters();render();renderAdmin()}
+function editOrder(i){const x=orders[i];$('#editIndex').value=i;$('#fName').value=x.name;$('#fTime').value=x.time;$('#fPriority').value=x.priority;$('#fPrice').value=x.price;$('#fBuyout').value=x.buyout;$('#fDiscount').value=x.discount;$('#fTotal').value=x.total;$('#fType').value=x.type||'';$('#fDirection').value=x.direction||'';window.scrollTo({top:0,behavior:'smooth'})}
+function deleteOrder(i){if(confirm(`Удалить заказ «${orders[i].name}»?`)){orders.splice(i,1);save()}}
+window.editOrder=editOrder;window.deleteOrder=deleteOrder;
+$('#orderForm').addEventListener('submit',e=>{e.preventDefault();const i=Number($('#editIndex').value);const x={name:$('#fName').value.trim(),time:Number($('#fTime').value),priority:Number($('#fPriority').value),price:Number($('#fPrice').value),buyout:Number($('#fBuyout').value),discount:Number($('#fDiscount').value),total:Number($('#fTotal').value),type:$('#fType').value.trim(),direction:$('#fDirection').value.trim()};if(i<0)orders.push(x);else orders[i]=x;save();e.target.reset();$('#editIndex').value=-1});
+$('#cancelEdit').onclick=()=>{$('#orderForm').reset();$('#editIndex').value=-1};
+$('#download').onclick=()=>{const blob=new Blob([JSON.stringify(orders,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='orders.json';a.click();URL.revokeObjectURL(a.href)};
+$('#loginForm').onsubmit=e=>{e.preventDefault();if($('#password').value===PASS){$('#loginBox').classList.add('hidden');$('#panel').classList.remove('hidden');$('#loginError').textContent=''}else $('#loginError').textContent='Неверный пароль'};
+$('#logout').onclick=()=>{$('#panel').classList.add('hidden');$('#loginBox').classList.remove('hidden');$('#password').value=''};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');const admin=b.dataset.tab==='admin';$('#queueTab').classList.toggle('hidden',admin);$('#adminTab').classList.toggle('hidden',!admin)});
+['search','typeFilter','directionFilter','sort'].forEach(id=>$('#'+id).addEventListener(id==='search'?'input':'change',render));load();
