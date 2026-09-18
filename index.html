@@ -17,10 +17,20 @@
   <section id="adminTab" class="admin hidden">
     <div id="loginBox" class="admin-card"><h2>Админка</h2><p class="muted">Введите пароль администратора.</p><form id="loginForm"><input id="password" type="password" placeholder="Пароль"><button class="primary" type="submit">Войти</button><div id="loginError" class="error"></div></form><p class="security-note">Важно: GitHub Pages — статический хостинг. Этот режим защищает интерфейс паролем только на уровне браузера. Для настоящей закрытой админки нужен сервер/база данных.</p></div>
     <div id="panel" class="hidden">
-      <div class="admin-top"><div><h2>Управление заказами</h2><p class="muted">Изменения сохраняются в этом браузере. Кнопка «Скачать JSON» подготовит файл для публикации на GitHub Pages.</p></div><div class="admin-actions"><button id="download" class="primary">Скачать JSON</button><button id="logout">Выйти</button></div></div>
+      <div class="admin-top"><div><h2>Управление заказами</h2><p class="muted">Редактируй очередь прямо здесь. После нажатия «Сохранить на сайте» изменения записываются в GitHub и становятся видны всем посетителям.</p></div><div class="admin-actions"><button id="saveGithub" class="primary">Сохранить на сайте</button><button id="download">Скачать JSON</button><button id="logout">Выйти</button></div></div><div id="syncStatus" class="sync-status"></div>
       <form id="orderForm" class="editor"><input type="hidden" id="editIndex" value="-1"><input id="fName" placeholder="Название заказа" required><input id="fTime" type="number" min="0" placeholder="Время" required><input id="fPriority" type="number" min="0" placeholder="Приоритет" required><input id="fPrice" type="number" min="0" placeholder="₽" required><input id="fBuyout" type="number" min="0" placeholder="Выкуп" required><input id="fDiscount" type="number" min="0" placeholder="Скидка" required><input id="fTotal" type="number" min="0" placeholder="Итог" required><input id="fType" placeholder="Тип"><input id="fDirection" placeholder="Направление"><div class="editor-buttons"><button class="primary" type="submit">Сохранить заказ</button><button type="button" id="cancelEdit">Очистить</button></div></form>
       <section class="admin-list"><div class="admin-list-head"><span>Заказ</span><span>Приоритет</span><span>Тип</span><span>Действия</span></div><div id="adminOrders"></div></section>
     </div>
   </section>
-</main><script src="script.js"></script>
+</main>
+<div id="tokenModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>Подключение к GitHub</h3>
+    <p class="muted">Вставь созданный GitHub Fine-grained token. Он используется только в этом браузере и не записывается в файлы сайта.</p>
+    <input id="githubToken" type="password" autocomplete="off" placeholder="github_pat_…">
+    <div class="modal-actions"><button id="cancelToken">Отмена</button><button id="confirmToken" class="primary">Подключить и сохранить</button></div>
+    <div id="tokenError" class="error"></div>
+  </div>
+</div>
+<script src="script.js"></script>
 </body></html>
